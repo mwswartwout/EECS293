@@ -1,0 +1,11 @@
+package hw1;
+
+public class main {
+
+	public static void main(String[] args) 
+	{
+		int i = charValue('a');
+		System.out.println(i);
+	}
+
+}

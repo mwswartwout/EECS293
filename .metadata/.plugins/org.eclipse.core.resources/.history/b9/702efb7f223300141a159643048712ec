@@ -1,0 +1,13 @@
+package hw1;
+
+public class main {
+
+	public static void main(String[] args) 
+	{
+		char[] characters = {'c'};
+		int i = Character.codePointAt(characters, 0);
+		int j = (int) 'c';
+		System.out.println(i + " " + j);
+	}
+
+}

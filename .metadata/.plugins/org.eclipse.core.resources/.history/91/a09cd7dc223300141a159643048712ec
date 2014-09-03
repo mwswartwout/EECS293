@@ -1,0 +1,19 @@
+package hw1;
+
+public class main {
+
+	public static void main(String[] args) 
+	{
+		String string1 = Methods.getString();
+		System.out.println(string1);
+		String string2 = Methods.getString();
+		System.out.println(string2);
+		int[] int1 = Methods.convertToIntArray(string1);
+		System.out.println(int1);
+		int[] int2 = Methods.convertToIntArray(string2);
+		System.out.println(int2);
+		Methods.sortArray(int1);
+		Methods.sortArray(int2);
+		Methods.determineIfEqual(int1, int2);
+	}
+}

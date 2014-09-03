@@ -1,0 +1,13 @@
+package hw1;
+
+public class main {
+
+	public static void main(String[] args) 
+	{
+		String string1 = Methods.getString();
+		String string2 = Methods.getString();
+		int[] int1 = Methods.convertToIntArray(string1);
+		int[] int2 = Methods.convertToIntArray(string2);
+		Methods.determineIfEqual(int1, int2);
+	}
+}

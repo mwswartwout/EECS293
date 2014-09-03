@@ -1,0 +1,12 @@
+package hw1;
+
+public class main {
+
+	public static void main(String[] args) 
+	{
+		String word = "test";
+		int i = word.compareToIgnoreCase("test");
+		System.out.println(i);	
+	}
+
+}

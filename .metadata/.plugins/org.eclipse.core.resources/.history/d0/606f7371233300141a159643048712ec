@@ -1,0 +1,41 @@
+package hw1;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Methods 
+{
+	static Scanner scan = new Scanner(System.in);
+	
+	public static String getString()
+	{
+		System.out.println("Enter a string");
+		return scan.next();
+	}
+	
+	public static int[] convertToIntArray(String string)
+	{
+		int[] intArray = new int[string.length()];
+				
+		for (int i = 0; i < string.length(); i++)
+		{
+			intArray[i] = Character.getNumericValue(string.charAt(i));
+			System.out.println(string.charAt(i) + " " + intArray[i]);
+		}
+		
+		return intArray;
+	}
+	
+	public static void sortArray(int[] intArray)
+	{
+		Arrays.sort(intArray);
+	}
+	
+	public static void determineIfEqual(int[] int1, int[] int2)
+	{
+		if (Arrays.equals(int1, int2))
+			System.out.println("The strings are equivalent");
+		else
+			System.out.println("The strings are not equivalent");
+	}
+}

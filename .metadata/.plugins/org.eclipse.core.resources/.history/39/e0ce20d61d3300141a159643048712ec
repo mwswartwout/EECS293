@@ -1,0 +1,12 @@
+package hw1;
+
+public class main {
+
+	public static void main(String[] args) 
+	{
+		char charac = 'd';
+		int i = Character.digit(charac, 10);
+		System.out.println(i);
+	}
+
+}

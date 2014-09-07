@@ -1,7 +1,7 @@
 package hw1;
 
-public class main {
-
+public class main 
+{
 	public static void main(String[] args) 
 	{
 		//Create strings

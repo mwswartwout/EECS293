@@ -11,9 +11,9 @@ public class User
 		status = validity.INVALID;
 	}
 	
-	public boolean setID(String id)
+	public boolean setID(String identifier)
 	{
-		
+
 	}
 	
 	public String getID()
@@ -27,6 +27,11 @@ public class User
 	}
 	
 	public String toString()
+	{
+		
+	}
+	
+	public boolean findUser()
 	{
 		
 	}

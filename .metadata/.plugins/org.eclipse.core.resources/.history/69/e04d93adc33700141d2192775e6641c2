@@ -1,0 +1,77 @@
+package hw2;
+
+public class Date 
+{
+		
+	private Month month;
+	private Day day;
+	private int year;
+	
+	public Date(Month month, Day day, int year)
+	{
+		this.month = month;
+		this.day = day;
+		this.year = year;
+	}
+	
+	public boolean isValid()
+	{
+		
+		switch(month)
+		{
+			case JANUARY: 
+			case MARCH:
+			case MAY:
+			case JULY:
+			case AUGUST:
+			case OCTOBER:
+			case DECEMBER:
+			{
+				//Nothing required because these months have 31 days
+			}
+			
+			case APRIL:
+			case JUNE:
+			case SEPTEMBER:
+			case NOVEMBER:
+			{
+				//Day can't be greater than 30
+				if ( day.getValue() == 31)
+					return false;
+			}
+			
+			case FEBRUARY:
+			{
+				//Check for leap year
+				if ((year % 4 == 0 && year % 100 != 0) || (year % 4 == 0 && year % 100 != 0 && year %400 == 0))
+				{
+					//Allow 29 days in leap year
+					if ( day.getValue() > 29)
+						return false;
+				}
+				
+				//If not leap year then day can't be greater than 28
+				else if (day.getValue() >28)
+					return false;
+			}
+		
+		}
+		
+		return true;
+	}
+	
+	public Month getMonth()
+	{
+		return month;
+	}
+	
+	public Day getDay()
+	{
+		return day;
+	}
+	
+	public int getYear()
+	{
+		return year;
+	}
+}

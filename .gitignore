@@ -52,4 +52,4 @@ $RECYCLE.BIN/
 *.msp
 
 #Eclipse metadata
-\.metadata
+\metadata\

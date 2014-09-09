@@ -11,8 +11,8 @@ import java.util.Set;
  */
 public class SocialNetwork 
 {
-	private static Set<User> network;
-	private static Iterator<User> iterator;
+	private Set<User> network;
+	private Iterator<User> iterator;
 	
 	/**
 	 * Constructor creates an emtpy social network
@@ -48,7 +48,7 @@ public class SocialNetwork
 	 * @param id the ID to be checked
 	 * @return true if a user exists with the given ID and false otherwise
 	 */
-	public static boolean isMember(String ID)
+	public boolean isMember(String id)
 	{
 		//Instantiate network iterator
 		iterator = network.iterator();
@@ -56,7 +56,7 @@ public class SocialNetwork
 		while (iterator.hasNext())
 		{
 			//Checks for user with the same ID
-			if (iterator.next().getID() == ID)
+			if (iterator.next().getID() == id)
 				return true;
 		}
 		

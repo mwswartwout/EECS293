@@ -36,7 +36,7 @@ public enum Month
 	/**
 	 * Gets the value of the month
 	 * 
-	 * @return The numerical value of the month
+	 * @return The int value of the month
 	 */
 	public int getValue()
 	{

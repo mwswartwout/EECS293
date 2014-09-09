@@ -1,0 +1,29 @@
+package hw2;
+
+public class UninitializedObjectException extends Exception
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2900297524876440899L;
+
+	public UninitializedObjectException()
+	{
+		
+	}
+	
+	public UninitializedObjectException(String message)
+	{
+		super(message);
+	}
+	
+	public UninitializedObjectException(String message, Throwable cause)
+	{
+		super(message, cause);
+	}
+	
+	public UninitializedObjectException(Throwable cause)
+	{
+		super(cause);
+	}
+}

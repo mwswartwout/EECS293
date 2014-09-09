@@ -12,7 +12,6 @@ public class Date
 	private Month month;
 	private Day day;
 	private int year;
-	private Activity activity;
 	
 	/**
 	 * Constructor, each {@code Date} must have a month, day, and year
@@ -129,15 +128,5 @@ public class Date
 	public int getYear()
 	{
 		return year;
-	}
-	
-	public void setActivity(Activity activity)
-	{
-		this.activity = activity;
-	}
-	
-	public Activity getActivity()
-	{
-		return activity;
 	}
 }

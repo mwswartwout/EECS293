@@ -25,7 +25,7 @@ public class User
 	 * @param ID The desired ID for the {@code User}
 	 * @return true if {@code User} did not exist in network with same ID, false if same ID did exist
 	 */
-	public boolean setID(String ID) throws NullPointerException
+	public boolean setID(String ID)
 	{
 		//Throw exception if ID is null
 		if (ID == null)

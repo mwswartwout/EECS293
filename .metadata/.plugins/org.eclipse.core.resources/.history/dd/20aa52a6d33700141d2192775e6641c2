@@ -11,8 +11,8 @@ import java.util.Set;
  */
 public class SocialNetwork 
 {
-	private static Set<User> network; //The network is a set of Users
-	private static Iterator<User> iterator; //Used to iterate over the Users in the network
+	private static Set<User> network;
+	private static Iterator<User> iterator;
 	
 	/**
 	 * Constructor creates an emtpy social network

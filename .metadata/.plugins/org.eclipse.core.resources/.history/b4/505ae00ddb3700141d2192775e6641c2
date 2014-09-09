@@ -180,33 +180,30 @@ public class Link
 			throw new UninitializedObjectException();
 	}
 	
-	/**
-	 * Converts {@code Link} into a human readable String
-	 * 
-	 * @return Returns a string with the {@code Link's} {@code Users} and the event dates or an error message
-	 */
+	
 	public String toString()
 	{
 		String print = null;
 		
-		if (isValid()) //Validity check
+		if (isValid())
 		{
 			Iterator<User> iterator = users.iterator();
 			
-			while (iterator.hasNext()) //Iterates over users and adds their IDs to the string
+			while (iterator.hasNext())
 				print += "User: " +iterator.next().getID() + "/n";
 			
 			Date currentDate;
 			
-			for (int i = 0; i < dates.size(); i++) //Iterates through the event list
+			for (int i = 0; i < dates.size(); i++)
 			{
 				currentDate = dates.get(i);
-				print  += currentDate.getMonth().getValue() + " " + currentDate.getDay().getValue() + " " + currentDate.getYear() + "/n"; //Adds Month + Date + Year to the string
+				print  += currentDate.getMonth().getValue() + " " + currentDate.getDay().getValue() + " " + currentDate.getYear() + "/n";
 			}
+
 		}
 		
 		else
-			print = "Invalid Link: Uninitialized IDs"; //Prints error if link is invalid
+			print = "Invalid Link: Uninitialized IDs";
 		
 		return print;
 	}

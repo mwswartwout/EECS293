@@ -1,0 +1,50 @@
+package hw2;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class UserTest 
+{
+	
+	@Test
+	public void testSetID() 
+	{
+		//Test normal user creation
+		User invalidUser = new User();
+		assertTrue(invalidUser.setID("ID"));
+		
+		//Test if user is already valid
+		User validUser = new User();
+		validUser.setID("original");
+		assertFalse(validUser.setID("different"));
+		
+		//Test for duplicate ID
+		User duplicateUser = new User();
+		assertFalse(duplicateUser.setID("ID"));
+	}
+
+	@Test
+	public void testGetID() 
+	{
+		//Test invalid User
+		User invalidUser = new User();
+		assertNull(invalidUser.getID());
+		
+		//Test valid User
+		User validUser = new User();
+		validUser.setID("ID");
+		assertEquals(validUser.getID(), "ID");
+	}
+
+	@Test
+	public void testIsValid() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testToString() {
+		fail("Not yet implemented");
+	}
+
+}

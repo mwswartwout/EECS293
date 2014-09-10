@@ -1,0 +1,49 @@
+package hw2;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class SocialNetworkTest {
+
+	@Test
+	public void testSocialNetwork() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testAddUser() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsMember() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetUser() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testFindLink() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testEstablishLink() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testTearDownLink() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsActive() {
+		fail("Not yet implemented");
+	}
+
+}

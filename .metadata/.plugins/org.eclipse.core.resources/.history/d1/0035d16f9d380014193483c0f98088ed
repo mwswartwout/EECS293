@@ -1,0 +1,34 @@
+package hw2;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class UserTest {
+
+	@Test
+	public void testUser() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsValid() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testToString() {
+		fail("Not yet implemented");
+	}
+
+}

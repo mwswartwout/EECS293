@@ -1,6 +1,7 @@
 package hw2;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -21,6 +22,8 @@ public class Link
 	 */
 	public Link()
 	{
+		users = new HashSet<User>();
+		dates = new ArrayList<Date>();
 		status = Validity.INVALID;
 	}
 	
@@ -37,10 +40,15 @@ public class Link
 		if (users == null)
 			throw new NullPointerException();
 		
+		User[] userArray = users.toArray(new User[0]);
+		
 		if (isValid()) //Validity check
 			return false;
 		if (users.size() > 2) //Checks for more than two users
 			return false;
+		if (!userArray[0].isValid() || !userArray[1].isValid()) //Make sure users are valid
+			return false;
+		
 		else
 		{
 			this.users = users; //Set users
@@ -92,7 +100,7 @@ public class Link
 		
 		if (isActive(date)) //Activity check
 			return false;
-		else if (date.isBefore(dates.get(dates.size()))) //Check if date precedes most recent connection
+		else if (dates.size() != 0 && date.isBefore(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
 			return false;
 		else if (!isValid()) //Validity check
 			throw new UninitializedObjectException();
@@ -120,7 +128,7 @@ public class Link
 		
 		if (!isActive(date)) //Activity check
 			return false;
-		else if (date.isBefore(dates.get(dates.size()))) //Check if date precedes most recent connection
+		else if (date.isBefore(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
 			return false;
 		else if (!isValid()) //Validity check
 			throw new UninitializedObjectException();
@@ -146,10 +154,11 @@ public class Link
 		//Check for null inputs
 		if (date == null)
 			throw new NullPointerException();
-		
-		if (!isValid()) //Validity check
+		else if (!isValid()) //Validity check
 			throw new UninitializedObjectException();
-		else if (nextEvent(date).getActivity() == Activity.ACTIVE) //If next event is active, then connection was inactive at time of date
+		else if (dates.size() == 0)
+			return false;
+		else if (nextEvent(date) != null && nextEvent(date) != date && nextEvent(date).getActivity() == Activity.ACTIVE) //If next event is active, then connection was inactive at time of date
 			return false;
 		else //If connection is valid + not inactive then it must be ACTIVE
 			return true; 
@@ -163,8 +172,15 @@ public class Link
 	 */
 	public Date firstEvent() throws UninitializedObjectException
 	{
-		if (isValid())
-			return dates.get(0);
+		if (isValid()) //Validity check
+		{
+			if (dates.size() == 0) //Check if there are no dates
+				return null;
+						
+			else
+				return dates.get(0);
+		}
+		
 		else
 			throw new UninitializedObjectException();
 	}
@@ -183,6 +199,9 @@ public class Link
 		if (date == null)
 			throw new NullPointerException();
 		
+		else if (dates.size() == 0)
+			return null;
+		
 		if (isValid()) //Validity check
 		{
 			Date iterateDate = dates.get(0);
@@ -190,16 +209,16 @@ public class Link
 			
 			while (iterateDate.isBefore(date)) //Checks if current iterateDate is before the specified date
 			{
-				iterateDate = dates.get(iterateCount); //Moves on to next event
-				iterateCount++;
-				
 				if (iterateCount == dates.size()) //Stops loop if it reaches end of dates list and there is no valid next event
 					return null;
+				
+				iterateDate = dates.get(iterateCount); //Moves on to next event
+				iterateCount++;
 			}
 			
 			return iterateDate;
 		}
-		
+
 		else 
 			throw new UninitializedObjectException();
 	}
@@ -211,21 +230,21 @@ public class Link
 	 */
 	public String toString()
 	{
-		String print = null;
+		String print = "";
 		
 		if (isValid()) //Validity check
 		{
 			Iterator<User> iterator = users.iterator();
 			
 			while (iterator.hasNext()) //Iterates over users and adds their IDs to the string
-				print += "User: " +iterator.next().getID() + "/n";
+				print += "User: " +iterator.next().getID() + ". ";
 			
 			Date currentDate;
 			
 			for (int i = 0; i < dates.size(); i++) //Iterates through the event list
 			{
 				currentDate = dates.get(i);
-				print  += currentDate.getMonth().getValue() + " " + currentDate.getDay().getValue() + " " + currentDate.getYear() + "/n"; //Adds Month + Date + Year to the string
+				print  += currentDate.getMonth().getValue() + " " + currentDate.getDay().getValue() + " " + currentDate.getYear() + " - "; //Adds Month + Date + Year to the string
 			}
 		}
 		

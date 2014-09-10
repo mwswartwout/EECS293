@@ -40,7 +40,7 @@ public class SocialNetwork
 			throw new NullPointerException();
 			
 		//Check if member already has same ID
-		if (isMember(user.getID()))
+		if (user.getID() != null && isMember(user.getID()))
 			return false;
 		else
 		{
@@ -62,6 +62,7 @@ public class SocialNetwork
 		//Check for null inputs
 		if (ID == null)
 			throw new NullPointerException();
+		
 		//Instantiate network userIterator
 		userIterator = networkUsers.iterator();
 		
@@ -90,19 +91,23 @@ public class SocialNetwork
 		
 		//Instantiate the network userIterator
 		userIterator = networkUsers.iterator();
+		User iteratorHold;
 		
 		while (userIterator.hasNext())
 		{
+			//Holds the current user of the iterator
+			iteratorHold = userIterator.next();
+			
 			//Checks for user with the same ID
-			if (userIterator.next().getID() == id)
-				return userIterator.next();
+			if (iteratorHold.getID() == id)
+				return iteratorHold;
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * Recieves a set of IDs and finds the link with the matching users
+	 * Receives a set of IDs and finds the link with the matching users
 	 * 
 	 * @param ids The IDs to be searched for
 	 * @return The {@code Link} if it exists, null if it doesn't
@@ -116,18 +121,22 @@ public class SocialNetwork
 			throw new NullPointerException();
 		
 		linkIterator = networkLinks.iterator(); //Set iterator
+		Link iteratorHold = linkIterator.next();
 		
 		String[] idArray = ids.toArray(new String[0]); //Holds the ID set
 		
-		while (linkIterator.hasNext())
+		while (iteratorHold != null)
 		{
-			User[] userArray = linkIterator.next().getUsers().toArray(new User[0]); //Get Users from current Link
-			
+	
+			User[] userArray = iteratorHold.getUsers().toArray(new User[0]); //Get Users from current Link
+				
 			if (userArray[0].getID() == idArray[0] && userArray[1].getID() == idArray[1]) //Checks if Users are identical
-				return linkIterator.next();
-			
+				return iteratorHold;
+				
 			if (userArray[0].getID() == idArray[1] && userArray[1].getID() == idArray[0]) //Checks if Users are identical but in a different order
-				return linkIterator.next();
+				return iteratorHold;
+			
+			iteratorHold = linkIterator.next();
 		}
 		
 		//If proper Link isn't found, return null
@@ -163,6 +172,7 @@ public class SocialNetwork
 		{
 			if (foundLink.establish(date)) //Establish the new Link
 				return true;
+			
 			else
 				return false;
 		}
@@ -179,7 +189,10 @@ public class SocialNetwork
 			newLink.setUsers(userSet); //Set the two users into the new LInk
 			
 			if (newLink.establish(date)) //Establish the new link
+			{
 				return true;
+			}
+			
 			else
 				return false;
 		}
@@ -218,22 +231,7 @@ public class SocialNetwork
 				return false;
 		}
 		
-		else //If the two users have never been linked
-		{
-			Link newLink = new Link(); //Create new Link
-			networkLinks.add(newLink); //Add new Link to the networkLinks
-			
-			Set<User> userSet = new HashSet<User>(); //Create a new User Set
-			userSet.add(getUser(idArray[0])); //Add user1 to the User Set
-			userSet.add(getUser(idArray[1])); //Add user2 to the User Set
-			
-			newLink.setUsers(userSet); //Set the two users into the new LInk
-			
-			if (newLink.tearDown(date)) //Tear down the link
-				return true;
-			else
-				return false;
-		}
+		return false;
 	}
 	
 	/**

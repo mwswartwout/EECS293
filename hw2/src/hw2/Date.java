@@ -48,7 +48,7 @@ public class Date
 			case OCTOBER:
 			case DECEMBER:
 			{
-				//Nothing required because these months have 31 days
+				break; //Do nothing, every possible combination is valid
 			}
 			
 			//Months with 30 days
@@ -60,26 +60,27 @@ public class Date
 				//Day can't be greater than 30
 				if ( day.getValue() == 31)
 					return false;
+				break;
 			}
 			
 			//February is special due to leap year
 			case FEBRUARY:
 			{
 				//Check for leap year
-				if ((year % 4 == 0 && year % 100 != 0) || (year % 4 == 0 && year % 100 != 0 && year %400 == 0))
+				if ((year % 4 == 0 && year % 100 != 0) || (year % 4 == 0 && year % 400 == 0))
 				{
 					//Allow 29 days in leap year
 					if ( day.getValue() > 29)
 						return false;
+					break;
 				}
 				
 				//If not leap year then day can't be greater than 28
 				else if (day.getValue() >28)
 					return false;
+				break;
 			}
-		
 		}
-		
 		return true;
 	}
 	

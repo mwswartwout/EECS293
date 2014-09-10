@@ -1,0 +1,71 @@
+package hw2;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class UserTest 
+{
+	
+	@Test
+	public void testSetID() 
+	{
+		SocialNetwork network = new SocialNetwork();
+		
+		//Test normal user creation
+		User invalidUser = new User();
+		network.addUser(invalidUser);
+		assertTrue(invalidUser.setID("ID"));
+		
+		//Test if user is already valid
+		User validUser = new User();
+		network.addUser(validUser);
+		validUser.setID("original");
+		assertFalse(validUser.setID("different"));
+		
+		//Test for duplicate ID
+		User duplicateUser = new User();
+		network.addUser(duplicateUser);
+		assertFalse(duplicateUser.setID("ID"));
+	}
+
+	@Test
+	public void testGetID() 
+	{
+		SocialNetwork network = new SocialNetwork();
+		
+		//Test invalid User
+		User invalidUser = new User();
+		network.addUser(invalidUser);
+		assertNull(invalidUser.getID());
+		
+		//Test valid User
+		User validUser = new User();
+		network.addUser(validUser);
+		validUser.setID("ID");
+		assertEquals(validUser.getID(), "ID");
+	}
+
+	@Test
+	public void testIsValid() 
+	{
+		SocialNetwork network = new SocialNetwork();
+		
+		//Test invalid user
+		User invalidUser = new User();
+		network.addUser(invalidUser);
+		assertFalse(invalidUser.isValid());
+		
+		//Test valid user
+		User validUser = new User();
+		network.addUser(validUser);
+		validUser.setID("ID");
+		assertTrue(validUser.isValid());
+	}
+
+	@Test
+	public void testToString() {
+		fail("Not yet implemented");
+	}
+
+}

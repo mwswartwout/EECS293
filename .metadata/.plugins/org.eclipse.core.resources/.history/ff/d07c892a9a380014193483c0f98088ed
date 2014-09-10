@@ -107,9 +107,8 @@ public class SocialNetwork
 	 * @param ids The IDs to be searched for
 	 * @return The {@code Link} if it exists, null if it doesn't
 	 * @throws NullPointerException if any inputs are null
-	 * @throws  
 	 */
-	public Link findLink(Set<String> ids) throws UninitializedObjectException, NullPointerException
+	public Link findLink(Set<String> ids) throws NullPointerException
 	{
 		//Check for null inputs
 		if (ids == null)
@@ -121,12 +120,12 @@ public class SocialNetwork
 		
 		while (linkIterator.hasNext())
 		{
-			User[] userArray = linkIterator.next().getUsers().toArray(new User[0]); //Get Users from current Link
+			User[] userArray = linkIterator.next().toArray(new User[0]); //Get Users from current Link
 			
 			if (userArray[0].getID() == idArray[0] && userArray[1].getID() == idArray[1]) //Checks if Users are identical
 				return linkIterator.next();
 			
-			if (userArray[0].getID() == idArray[1] && userArray[1].getID() == idArray[0]) //Checks if Users are identical but in a different order
+			if (userArray[0].getID() == idArray[1] && userArray[1].getID() == idArray[0])) //Checks if Users are identical but in a different order
 				return linkIterator.next();
 		}
 		

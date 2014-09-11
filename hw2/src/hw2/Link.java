@@ -160,6 +160,8 @@ public class Link
 			return false;
 		else if (nextEvent(date) != null && nextEvent(date) != date && nextEvent(date).getActivity() == Activity.ACTIVE) //If next event is active, then connection was inactive at time of date
 			return false;
+		else if (nextEvent(date) == null && dates.size() % 2 == 0) //If the event input was the last event in the dates list, and dates.size() % 2 = 0 then link is inactive
+			return false;
 		else //If connection is valid + not inactive then it must be ACTIVE
 			return true; 
 	}

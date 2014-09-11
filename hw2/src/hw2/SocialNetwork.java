@@ -13,8 +13,6 @@ public class SocialNetwork
 {
 	private static Set<User> networkUsers; //The network Users
 	private static Set<Link> networkLinks; //The networks Links
-	private static Iterator<User> userIterator; //Used to iterate over the Users in the network
-	private static Iterator<Link> linkIterator;
 	
 	/**
 	 * Constructor creates an emtpy social network
@@ -64,7 +62,7 @@ public class SocialNetwork
 			throw new NullPointerException();
 		
 		//Instantiate network userIterator
-		userIterator = networkUsers.iterator();
+		Iterator<User> userIterator = networkUsers.iterator();
 		
 		while (userIterator.hasNext())
 		{
@@ -90,17 +88,19 @@ public class SocialNetwork
 			throw new NullPointerException();
 		
 		//Instantiate the network userIterator
-		userIterator = networkUsers.iterator();
-		User iteratorHold;
+		Iterator<User> userIterator = networkUsers.iterator();
+		User iteratorHold = null;
 		
-		while (userIterator.hasNext())
-		{
-			//Holds the current user of the iterator
+		if (networkUsers.size() > 0)
 			iteratorHold = userIterator.next();
-			
+		
+		while (iteratorHold != null)
+		{
 			//Checks for user with the same ID
 			if (iteratorHold.getID() == id)
 				return iteratorHold;
+			
+			iteratorHold = userIterator.next();
 		}
 		
 		return null;
@@ -120,8 +120,11 @@ public class SocialNetwork
 		if (ids == null)
 			throw new NullPointerException();
 		
-		linkIterator = networkLinks.iterator(); //Set iterator
-		Link iteratorHold = linkIterator.next();
+		Iterator<Link> linkIterator = networkLinks.iterator(); //Set iterator
+		Link iteratorHold = null;
+		
+		if (networkLinks.size() > 0)
+			iteratorHold = linkIterator.next();
 		
 		String[] idArray = ids.toArray(new String[0]); //Holds the ID set
 		

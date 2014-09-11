@@ -30,11 +30,9 @@ public class User
 		//Throw exception if ID is null
 		if (ID == null)
 			throw new NullPointerException();
-		
 		//If a user exists with the same ID, return false
 		else if (SocialNetwork.isMember(ID))
 			return false;
-		
 		//If the ID isn't null, and no User exists with that ID, return true
 		else
 		{
@@ -45,7 +43,7 @@ public class User
 	}
 	
 	/**
-	 * Get's the ID of a User
+	 * Gets the ID of a User
 	 * 
 	 * @return The User's ID if the User is valid, null is User is invalid
 	 */

@@ -147,18 +147,15 @@ public class SocialNetwork
 	 * @throws UninitializedObjectException throws exception if passed {@code Users} that are not valid
 	 * @throws NullPointerException if any inputs are null
 	 */
-	public boolean establishLink(Set<String> ids, Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
+	public boolean establishLink(Set<String> ids, Date date) throws UninitializedObjectException, NullPointerException
 	{
 		checkForNullInput(ids, date);
 		
 		String[] idArray = ids.toArray(new String[0]); //Array to hold IDs
 		
 		if (idArray.length != 2 || idArray[0] == idArray[1]) //Check if there are only two IDs, and if they are distinct
-		{
-			status = SocialNetworkStatus.INVALID_USERS;
 			return false;
-		}
-			
+		
 		if (!isMember(idArray[0]) || !isMember(idArray[1])) //Check that both IDs are valid members of the network
 			return false;
 		
@@ -166,7 +163,7 @@ public class SocialNetwork
 		
 		if (foundLink != null) //If there is an existing Link
 		{
-			return foundLink.establish(date, status);
+			return foundLink.establish(date);
 		}
 		
 		else //If the two users have never been linked
@@ -178,10 +175,9 @@ public class SocialNetwork
 			userSet.add(getUser(idArray[0])); //Add user1 to the User Set
 			userSet.add(getUser(idArray[1])); //Add user2 to the User Set
 			
-			newLink.setUsers(userSet, status); //Set the two users into the new LInk
+			newLink.setUsers(userSet); //Set the two users into the new LInk
 			
-			return newLink.establish(date, status);
-		}
+			return newLink.establish(date);
 	}
 	
 	/**
@@ -193,17 +189,14 @@ public class SocialNetwork
 	 * @throws UninitializedObjectException Throws exception if passed {@code Users} that are not valid
 	 * @throws NullPointerException if any inputs are null
 	 */
-	public boolean tearDownLink(Set<String> ids, Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
+	public boolean tearDownLink(Set<String> ids, Date date) throws UninitializedObjectException, NullPointerException
 	{
 		checkForNullInput(ids, date);
 		
 		String[] idArray = ids.toArray(new String[0]); //Array to hold IDs
 		
 		if (idArray.length != 2 || idArray[0] == idArray[1]) //Check if there are only two IDs, and if they are distinct
-		{
-			status = SocialNetworkStatus.INVALID_USERS;
 			return false;
-		}
 		
 		if (!isMember(idArray[0]) || !isMember(idArray[1])) //Check that both IDs are valid members of the network
 			return false;
@@ -212,7 +205,7 @@ public class SocialNetwork
 		
 		if (foundLink != null) //If there is an existing Link
 		{
-			return foundLink.tearDown(date, status);
+			return foundLink.tearDown(date);
 		}
 		
 		return false;

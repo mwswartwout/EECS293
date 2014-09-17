@@ -1,13 +1,12 @@
 package hw2;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Link contains a set of two {@code Users}, an ArrayList of {@code Dates} and a {@code Validity} valid
+ * Link contains a set of two {@code Users}, an ArrayList of {@code Dates} and a {@code Validity} status
  * 
  * @author Matthew Swartwout
  *
@@ -16,8 +15,7 @@ public class Link
 {
 	private Set<User> users;
 	private ArrayList<Date> dates;
-	private Validity valid;
-	private Activity active;
+	private Validity status;
 	
 	/**
 	 * Empty constructor created INVALID {@code Link}
@@ -26,8 +24,7 @@ public class Link
 	{
 		users = new HashSet<User>();
 		dates = new ArrayList<Date>();
-		valid = Validity.INVALID;
-		active = Activity.INACTIVE;
+		status = Validity.INVALID;
 	}
 	
 	/**
@@ -37,32 +34,25 @@ public class Link
 	 * @return true if users were set, false if {@code Link} already existed or more than two {@code Users} were entered
 	 * @throws NullPointerException if passed null inputs
 	 */
-	public boolean setUsers(Set<User> users, SocialNetworkStatus status) throws NullPointerException
+	public boolean setUsers(Set<User> users) throws NullPointerException
 	{
-		checkForNullInput(users);
+		//Check for null inputs
+		if (users == null)
+			throw new NullPointerException();
 		
 		User[] userArray = users.toArray(new User[0]);
 		
 		if (isValid()) //Validity check
-		{
-			status = SocialNetworkStatus.ALREADY_VALID;
 			return false;
-		}
 		if (users.size() > 2) //Checks for more than two users
-		{
-			status = SocialNetworkStatus.INVALID_USERS;
 			return false;
-		}
 		if (!userArray[0].isValid() || !userArray[1].isValid()) //Make sure users are valid
-		{
-			status = SocialNetworkStatus.INVALID_USERS;
 			return false;
-		}
+		
 		else
 		{
 			this.users = users; //Set users
-			valid = Validity.VALID; //Set validity
-			status = SocialNetworkStatus.SUCCESS;
+			status = Validity.VALID; //Set validity
 			return true;
 		}
 	}
@@ -74,7 +64,7 @@ public class Link
 	 */
 	public boolean isValid()
 	{		
-		if (valid == Validity.VALID)
+		if (status == Validity.VALID)
 			return true;
 		else
 			return false;
@@ -88,9 +78,10 @@ public class Link
 	 */
 	public Set<User> getUsers() throws UninitializedObjectException
 	{	
-		checkForValid();
-		
-		return users;
+		if (isValid())
+			return users;
+		else
+			throw new UninitializedObjectException();
 	}
 	
 	/**
@@ -101,26 +92,22 @@ public class Link
 	 * @throws UninitializedObjectException throws exception if {@code Link} is invalid
 	 * @throws NullPointerException if passed null inputs
 	 */
-	public boolean establish(Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
+	public boolean establish(Date date) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
-		checkForValid();
+		//Check for null inputs
+		if (date == null)
+			throw new NullPointerException();
 		
 		if (isActive(date)) //Activity check
-		{
-			status = SocialNetworkStatus.ALREADY_ACTIVE;
 			return false;
-		}
-		else if (dates.size() != 0 && date.before(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
-		{
-			status = SocialNetworkStatus.INVALID_DATE;
+		else if (dates.size() != 0 && date.isBefore(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
 			return false;
-		}
+		else if (!isValid()) //Validity check
+			throw new UninitializedObjectException();
 		else 
 		{
-			active = Activity.ACTIVE;
+			date.setActivity(Activity.ACTIVE); //Set activity for date
 			dates.add(date); //Add date to dates list
-			status = SocialNetworkStatus.SUCCESS;
 			return true;
 		}
 	}
@@ -133,26 +120,22 @@ public class Link
 	 * @throws UninitializedObjectException throws exception if {@code Link} is invalid
 	 * @throws NullPointerException if passed null inputs
 	 */
-	public boolean tearDown(Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
+	public boolean tearDown(Date date) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
-		checkForValid();
+		//Check for null inputs
+		if (date == null)
+			throw new NullPointerException();
 		
 		if (!isActive(date)) //Activity check
-		{
-			status = SocialNetworkStatus.ALREADY_INACTIVE;
 			return false;
-		}
-		else if (date.before(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
-		{
-			status = SocialNetworkStatus.INVALID_DATE;
+		else if (date.isBefore(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
 			return false;
-		}
+		else if (!isValid()) //Validity check
+			throw new UninitializedObjectException();
 		else
 		{
-			active = Activity.INACTIVE; //Set activity for date
+			date.setActivity(Activity.INACTIVE); //Set activity for date
 			dates.add(date); //Add date to dates list
-			status = SocialNetworkStatus.SUCCESS;
 			return true;
 		}
 		
@@ -168,12 +151,14 @@ public class Link
 	 */
 	public boolean isActive(Date date) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
-		checkForValid();
-		
-		if (dates.size() == 0)
+		//Check for null inputs
+		if (date == null)
+			throw new NullPointerException();
+		else if (!isValid()) //Validity check
+			throw new UninitializedObjectException();
+		else if (dates.size() == 0)
 			return false;
-		else if (dates.indexOf(nextEvent(date)) % 2 == 1) // If the index of the next Event mod 2 is 1, then the link was inactive at the specified date
+		else if (nextEvent(date) != null && nextEvent(date) != date && nextEvent(date).getActivity() == Activity.ACTIVE) //If next event is active, then connection was inactive at time of date
 			return false;
 		else if (nextEvent(date) == null && dates.size() % 2 == 0) //If the event input was the last event in the dates list, and dates.size() % 2 = 0 then link is inactive
 			return false;
@@ -189,14 +174,17 @@ public class Link
 	 */
 	public Date firstEvent() throws UninitializedObjectException
 	{
-		
-		checkForValid();
-			
-		if (dates.size() == 0) //Check if there are no dates
-			return null;
+		if (isValid()) //Validity check
+		{
+			if (dates.size() == 0) //Check if there are no dates
+				return null;
 						
+			else
+				return dates.get(0);
+		}
+		
 		else
-			return dates.get(0);
+			throw new UninitializedObjectException();
 	}
 	
 	/**
@@ -209,25 +197,32 @@ public class Link
 	 */
 	public Date nextEvent(Date date) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
-		checkForValid();
+		//Check for null inputs
+		if (date == null)
+			throw new NullPointerException();
 		
-		if (dates.size() == 0)
+		else if (dates.size() == 0)
 			return null;
 		
-		Date iterateDate = dates.get(0);
-		int iterateCount = 1;
-			
-		while (iterateDate.before(date)) //Checks if current iterateDate is before the specified date
+		if (isValid()) //Validity check
 		{
-			if (iterateCount == dates.size()) //Stops loop if it reaches end of dates list and there is no valid next event
-				return null;
-				
-			iterateDate = dates.get(iterateCount); //Moves on to next event
-			iterateCount++;
-		}
+			Date iterateDate = dates.get(0);
+			int iterateCount = 1;
 			
-		return iterateDate;
+			while (iterateDate.isBefore(date)) //Checks if current iterateDate is before the specified date
+			{
+				if (iterateCount == dates.size()) //Stops loop if it reaches end of dates list and there is no valid next event
+					return null;
+				
+				iterateDate = dates.get(iterateCount); //Moves on to next event
+				iterateCount++;
+			}
+			
+			return iterateDate;
+		}
+
+		else 
+			throw new UninitializedObjectException();
 	}
 	
 	/**
@@ -251,7 +246,7 @@ public class Link
 			for (int i = 0; i < dates.size(); i++) //Iterates through the event list
 			{
 				currentDate = dates.get(i);
-				print  += currentDate.toString(); //Adds Month + Date + Year to the string
+				print  += currentDate.getMonth().getValue() + " " + currentDate.getDay().getValue() + " " + currentDate.getYear() + " - "; //Adds Month + Date + Year to the string
 			}
 		}
 		
@@ -259,31 +254,5 @@ public class Link
 			print = "Invalid Link: Uninitialized IDs"; //Prints error if link is invalid
 		
 		return print;
-	}
-	
-	/**
-	 * Checks if any inputs to a method are null
-	 * 
-	 * @param arguments varargs from a method
-	 * @throws NullPointerException Throws exception if any of the arguments are null
-	 */
-	private void checkForNullInput(Object... arguments) throws NullPointerException
-	{
-		for(Object element : arguments)
-		{
-			if (element == null)
-				throw new NullPointerException("One of the inputs was null");
-		}
-	}
-	
-	/**
-	 * Checks if a link is valid
-	 * 
-	 * @throws UninitializedObjectException Throws exception if the link is not valid
-	 */
-	private void checkForValid() throws UninitializedObjectException
-	{
-		if (isValid())
-			throw new UninitializedObjectException("The link is not valid"); 
 	}
 }

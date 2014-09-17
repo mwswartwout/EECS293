@@ -8,7 +8,7 @@ package hw2;
  */
 public class User 
 {
-	private String ID;
+	private String ID, firstName, middleName, lastName, email, phoneNumber;
 	private Validity status;
 	
 	/**
@@ -27,11 +27,10 @@ public class User
 	 */
 	public boolean setID(String ID) throws NullPointerException
 	{
-		//Throw exception if ID is null
-		if (ID == null)
-			throw new NullPointerException();
+		checkForNullInput(ID);
+		
 		//If a user exists with the same ID, return false
-		else if (SocialNetwork.isMember(ID))
+		if (SocialNetwork.isMember(ID))
 			return false;
 		//If the ID isn't null, and no User exists with that ID, return true
 		else
@@ -77,5 +76,146 @@ public class User
 			return "Valid user: ID = " + ID +".";
 		else
 			return "Invalid User: Uninitialized ID";
+	}
+	
+	/**
+	 * Checks if any inputs to a method are null
+	 * 
+	 * @param arguments varargs from a method
+	 * @throws NullPointerException Throws exception if any of the arguments are null
+	 */
+	private void checkForNullInput(Object... arguments) throws NullPointerException
+	{
+		for(Object element : arguments)
+		{
+			if (element == null)
+				throw new NullPointerException("One of the inputs was null");
+		}
+	}
+	
+	private void checkForValid() throws UninitializedObjectException
+	{
+		if (!isValid())
+			throw new UninitializedObjectException();
+	}
+	
+	/**
+	 * Sets the firstName of the User
+	 * @param name The first name to be set
+	 * @throws UninitializedObjectException throws exception if user is not valid
+	 * @throws NullPointerException throws exception if inputs are null
+	 */
+	public User setFirstName(String name) throws UninitializedObjectException, NullPointerException
+	{
+		checkForNullInput(name);
+		checkForValid();
+		
+		firstName = name;
+		return this;
+	}
+	
+	/**
+	 * Sets the middleName of the User
+	 * @param name The middleName to be set
+	 * @throws UninitializedObjectException throws exception if user is not valid
+	 * @throws NullPointerException throws exception if any inputs are null
+	 */
+	public User setMiddleName(String name) throws UninitializedObjectException, NullPointerException
+	{
+		checkForNullInput(name);
+		checkForValid();
+		
+		middleName = name;
+		return this;
+	}
+	
+	/**
+	 * Sets the lastName of the User
+	 * @param name The lastName to be set
+	 * @throws UninitializedObjectException throws exception if user is not valid
+	 * @throws NullPointerException throws exception if any inputs are null
+	 */
+	public User setLastName(String name) throws UninitializedObjectException, NullPointerException
+	{
+		checkForNullInput(name);
+		checkForValid();
+		
+		lastName = name;
+		return this;
+	}
+	
+	/**
+	 * Sets the email of the User
+	 * @param name The email to be set
+	 * @throws UninitializedObjectException throws exception if user is not valid
+	 * @throws NullPointerException throws exception if any inputs are null
+	 */
+	public User setEmail(String name) throws UninitializedObjectException, NullPointerException
+	{
+		checkForNullInput(name);
+		checkForValid();
+		
+		email = name;
+		return this;
+	}
+	
+	/**
+	 * Sets the phoneNumber of the User
+	 * @param name The phoneNumber to be set
+	 * @throws UninitializedObjectException throws exception if user is not valid
+	 * @throws NullPointerException throws exception if any inputs are null
+	 */
+	public User setPhoneNumber(String name) throws UninitializedObjectException, NullPointerException
+	{
+		checkForNullInput(name);
+		checkForValid();
+		
+		phoneNumber = name;
+		return this;
+	}
+	
+	/**
+	 * Getter for a User's firstName
+	 * @return The firstName of the User
+	 */
+	public String getFirstName()
+	{
+		return firstName;
+	}
+	
+	/**
+	 * Getter for a User's middleName
+	 * @return The middleName of the User
+	 */
+	public String getMiddleName()
+	{
+		return middleName;
+	}
+	
+	/**
+	 * Getter for a User's lastName
+	 * @return The lastName of the User
+	 */
+	public String getLastName()
+	{
+		return lastName;
+	}
+	
+	/**
+	 * Getter for a User's email
+	 * @return The email of the User
+	 */
+	public String getEmail()
+	{
+		return email;
+	}
+	
+	/**
+	 * Getter for a User's phoneNumber
+	 * @return The phoneNumber of the User
+	 */
+	public String getPhoneNumber()
+	{
+		return phoneNumber;
 	}
 }

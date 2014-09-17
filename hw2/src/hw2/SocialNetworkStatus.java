@@ -1,0 +1,11 @@
+package hw2;
+
+public enum SocialNetworkStatus 
+{
+	SUCCESS,
+	ALREADY_VALID,
+	INVALID_USERS,
+	INVALID_DATE,
+	ALREADY_ACTIVE,
+	ALREADY_INACTIVE;
+}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="1278" key="dialogWidth"/>
-		<item value="678" key="dialogHeight"/>
+		<item value="1440" key="dialogWidth"/>
+		<item value="759" key="dialogHeight"/>
 		<list key="orderedProviders">
 		</list>
 		<list key="textArray">
@@ -14,6 +14,13 @@
 	</section>
 	<section name="WorkbenchPreferenceDialogSettings">
 		<item value="62" key="DIALOG_Y_ORIGIN"/>
-		<item value="612" key="DIALOG_X_ORIGIN"/>
+		<item value="247" key="DIALOG_X_ORIGIN"/>
+	</section>
+	<section name="ImportExportAction">
+		<item value="org.eclipse.ant.ui.export" key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID"/>
+		<list key="ImportExportPage.STORE_EXPANDED_EXPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+			<item value="org.eclipse.equinox.p2.category"/>
+		</list>
 	</section>
 </section>

@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Link contains a set of two {@code Users}, an ArrayList of {@code Dates} and a {@code Validity} valid
  * 
- * @author Matthew Swartwout
+ * @author Matthew Swartwout, mws85
  *
  */
 public class Link 
@@ -39,30 +39,30 @@ public class Link
 	 */
 	public boolean setUsers(Set<User> users, SocialNetworkStatus status) throws NullPointerException
 	{
-		checkForNullInput(users);
+		HelperMethods.checkForNullInput(users);
 		
 		User[] userArray = users.toArray(new User[0]);
 		
 		if (isValid()) //Validity check
 		{
-			status = SocialNetworkStatus.ALREADY_VALID;
+			status.setStatus(Status.ALREADY_VALID);
 			return false;
 		}
 		if (users.size() > 2) //Checks for more than two users
 		{
-			status = SocialNetworkStatus.INVALID_USERS;
+			status.setStatus(Status.INVALID_USERS);
 			return false;
 		}
 		if (!userArray[0].isValid() || !userArray[1].isValid()) //Make sure users are valid
 		{
-			status = SocialNetworkStatus.INVALID_USERS;
+			status.setStatus(Status.INVALID_USERS);
 			return false;
 		}
 		else
 		{
 			this.users = users; //Set users
 			valid = Validity.VALID; //Set validity
-			status = SocialNetworkStatus.SUCCESS;
+			status.setStatus(Status.SUCCESS);
 			return true;
 		}
 	}
@@ -103,24 +103,24 @@ public class Link
 	 */
 	public boolean establish(Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
+		HelperMethods.checkForNullInput(date);
 		checkForValid();
 		
 		if (isActive(date)) //Activity check
 		{
-			status = SocialNetworkStatus.ALREADY_ACTIVE;
+			status.setStatus(Status.ALREADY_ACTIVE);
 			return false;
 		}
 		else if (dates.size() != 0 && date.before(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
 		{
-			status = SocialNetworkStatus.INVALID_DATE;
+			status.setStatus(Status.INVALID_DATE);
 			return false;
 		}
 		else 
 		{
 			active = Activity.ACTIVE;
 			dates.add(date); //Add date to dates list
-			status = SocialNetworkStatus.SUCCESS;
+			status.setStatus(Status.SUCCESS);
 			return true;
 		}
 	}
@@ -135,24 +135,24 @@ public class Link
 	 */
 	public boolean tearDown(Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
+		HelperMethods.checkForNullInput(date);
 		checkForValid();
 		
 		if (!isActive(date)) //Activity check
 		{
-			status = SocialNetworkStatus.ALREADY_INACTIVE;
+			status.setStatus(Status.ALREADY_INACTIVE);
 			return false;
 		}
 		else if (date.before(dates.get(dates.size() - 1))) //Check if date precedes most recent connection
 		{
-			status = SocialNetworkStatus.INVALID_DATE;
+			status.setStatus(Status.INVALID_DATE);
 			return false;
 		}
 		else
 		{
 			active = Activity.INACTIVE; //Set activity for date
 			dates.add(date); //Add date to dates list
-			status = SocialNetworkStatus.SUCCESS;
+			status.setStatus(Status.SUCCESS);
 			return true;
 		}
 		
@@ -168,7 +168,7 @@ public class Link
 	 */
 	public boolean isActive(Date date) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
+		HelperMethods.checkForNullInput(date);
 		checkForValid();
 		
 		if (dates.size() == 0)
@@ -209,7 +209,7 @@ public class Link
 	 */
 	public Date nextEvent(Date date) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(date);
+		HelperMethods.checkForNullInput(date);
 		checkForValid();
 		
 		if (dates.size() == 0)
@@ -262,21 +262,6 @@ public class Link
 	}
 	
 	/**
-	 * Checks if any inputs to a method are null
-	 * 
-	 * @param arguments varargs from a method
-	 * @throws NullPointerException Throws exception if any of the arguments are null
-	 */
-	private void checkForNullInput(Object... arguments) throws NullPointerException
-	{
-		for(Object element : arguments)
-		{
-			if (element == null)
-				throw new NullPointerException("One of the inputs was null");
-		}
-	}
-	
-	/**
 	 * Checks if a link is valid
 	 * 
 	 * @throws UninitializedObjectException Throws exception if the link is not valid
@@ -285,5 +270,10 @@ public class Link
 	{
 		if (isValid())
 			throw new UninitializedObjectException("The link is not valid"); 
+	}
+	
+	public Activity getActivity()
+	{
+		return active;
 	}
 }

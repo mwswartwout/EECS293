@@ -1,11 +1,21 @@
 package hw2;
 
-public enum SocialNetworkStatus 
-{
-	SUCCESS,
-	ALREADY_VALID,
-	INVALID_USERS,
-	INVALID_DATE,
-	ALREADY_ACTIVE,
-	ALREADY_INACTIVE;
+public class SocialNetworkStatus 
+{	
+	private Status status;
+	
+	public SocialNetworkStatus(Status status)
+	{
+		this.status = status;
+	}
+	
+	public void setStatus(Status status)
+	{
+		this.status = status;
+	}
+	
+	public Status getStatus()
+	{
+		return status;
+	}
 }

@@ -3,7 +3,7 @@ package hw2;
 /**
  * {@code User} has an ID that is a String, and a status that is a Validity
  * 
- * @author Matthew Swartwout
+ * @author Matthew Swartwout, mws85
  *
  */
 public class User 
@@ -25,20 +25,15 @@ public class User
 	 * @param ID The desired ID for the {@code User}
 	 * @return true if {@code User} did not exist in network with same ID, false if same ID did exist
 	 */
-	public boolean setID(String ID) throws NullPointerException
+	public boolean setID(String ID) throws NullPointerException, UninitializedObjectException
 	{
 		checkForNullInput(ID);
+		checkForValid();
 		
-		//If a user exists with the same ID, return false
-		if (SocialNetwork.isMember(ID))
-			return false;
 		//If the ID isn't null, and no User exists with that ID, return true
-		else
-		{
-			this.ID = ID; //Set ID to desired ID
-			status = Validity.VALID; //Set status to Valid
-			return true;
-		}
+		this.ID = ID; //Set ID to desired ID
+		status = Validity.VALID; //Set status to Valid
+		return true;
 	}
 	
 	/**

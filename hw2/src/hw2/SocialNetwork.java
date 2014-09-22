@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * SocialNetwork implements adding, finding, and linking {@code Users} in a network
- * @author Matthew Swartwout
+ * @author Matthew Swartwout, mws85
  *
  */
 public class SocialNetwork 
@@ -35,7 +35,7 @@ public class SocialNetwork
 	 */
 	public boolean addUser(User user) throws NullPointerException
 	{
-		checkForNullInput(user);
+		HelperMethods.checkForNullInput(user);
 			
 		//Check if member already has same ID
 		if (isMember(user.getID()))
@@ -55,9 +55,9 @@ public class SocialNetwork
 	 * @return true if a user exists with the given ID and false otherwise
 	 * @throws NullPointerException if any inputs are null
 	 */
-	public static boolean isMember(String ID) throws NullPointerException
+	public boolean isMember(String ID) throws NullPointerException
 	{
-		checkForNullInput(ID);
+		HelperMethods.checkForNullInput(ID);
 		
 		//Instantiate network userIterator
 		Iterator<User> userIterator = networkUsers.iterator();
@@ -81,7 +81,7 @@ public class SocialNetwork
 	 */
 	public User getUser(String id) throws NullPointerException
 	{
-		checkForNullInput(id);
+		HelperMethods.checkForNullInput(id);
 		
 		//Instantiate the network userIterator
 		Iterator<User> userIterator = networkUsers.iterator();
@@ -112,7 +112,7 @@ public class SocialNetwork
 	 */
 	public Link findLink(Set<String> ids) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(ids);
+		HelperMethods.checkForNullInput(ids);
 		
 		Iterator<Link> linkIterator = networkLinks.iterator(); //Set iterator
 		Link iteratorHold = null;
@@ -149,17 +149,17 @@ public class SocialNetwork
 	 */
 	public boolean establishLink(Set<String> ids, Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(ids, date);
+		HelperMethods.checkForNullInput(ids, date);
 		
 		String[] idArray = ids.toArray(new String[0]); //Array to hold IDs
 		
-		if (idArray.length != 2 || idArray[0] == idArray[1]) //Check if there are only two IDs, and if they are distinct
+		if (!distinctUserCheck(idArray)) //Check if there are only two IDs, and if they are distinct
 		{
-			status = SocialNetworkStatus.INVALID_USERS;
+			status.setStatus(Status.INVALID_USERS);
 			return false;
 		}
 			
-		if (!isMember(idArray[0]) || !isMember(idArray[1])) //Check that both IDs are valid members of the network
+		if (!validMemberCheck(idArray)) //Check that both IDs are valid members of the network
 			return false;
 		
 		Link foundLink = findLink(ids); //Find if there is an existing Link between the users
@@ -195,17 +195,17 @@ public class SocialNetwork
 	 */
 	public boolean tearDownLink(Set<String> ids, Date date, SocialNetworkStatus status) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(ids, date);
+		HelperMethods.checkForNullInput(ids, date);
 		
 		String[] idArray = ids.toArray(new String[0]); //Array to hold IDs
 		
-		if (idArray.length != 2 || idArray[0] == idArray[1]) //Check if there are only two IDs, and if they are distinct
+		if (!distinctUserCheck(idArray)) //Check if there are only two IDs, and if they are distinct
 		{
-			status = SocialNetworkStatus.INVALID_USERS;
+			status.setStatus(Status.INVALID_USERS);
 			return false;
 		}
 		
-		if (!isMember(idArray[0]) || !isMember(idArray[1])) //Check that both IDs are valid members of the network
+		if (!validMemberCheck(idArray)) //Check that both IDs are valid members of the network
 			return false;
 		
 		Link foundLink = findLink(ids); //Find if there is an existing Link between the users
@@ -228,7 +228,7 @@ public class SocialNetwork
 	 */
 	public boolean isActive(Set<String> ids, Date date) throws UninitializedObjectException, NullPointerException
 	{
-		checkForNullInput(ids, date);
+		HelperMethods.checkForNullInput(ids, date);
 		
 		Link foundLink = findLink(ids); //Finds the link between the Users
 		
@@ -242,18 +242,19 @@ public class SocialNetwork
 			
 	}
 	
-	/**
-	 * Checks if any inputs to a method are null
-	 * 
-	 * @param arguments varargs from a method
-	 * @throws NullPointerException Throws exception if any of the arguments are null
-	 */
-	private static void checkForNullInput(Object... arguments) throws NullPointerException
-	{
-		for(Object element : arguments)
-		{
-			if (element == null)
-				throw new NullPointerException("One of the inputs was null");
-		}
+	private boolean distinctUserCheck(String[] idArray)
+	{		
+		if (idArray.length != 2 || idArray[0] == idArray[1])
+			return false;
+		else
+			return true;
+	}
+	
+	private boolean validMemberCheck(String[] idArray)
+	{	
+		if (isMember(idArray[0]) && isMember(idArray[1]))
+			return true;
+		else
+			return false;
 	}
 }

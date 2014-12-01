@@ -1,0 +1,96 @@
+Routine has parameters of the size of the grid, and the plank layout, returns a reverse order list of the shortest path through the maze
+
+max_path <- (size of grid - 1)*(size of grid + 1)
+
+if max_path equals -1
+	return an empty set because there is no puzzle
+	
+Create a list of nodes, shortest_path
+Create a new queue, main_queue
+Create a new queue, next_queue
+
+Add the entrance node to main_queue
+
+Create a boolean, found <- false
+Create an integer, path_length <- 0
+Create a new node, final_node
+
+First do a breadth first search without using the extra plank
+While both queues are not empty and found is false 
+	pop the first node from main_queue
+	
+	if it's the node we're looking for
+			found <- true
+			final_node <- the found node
+			max_path <- path_length
+	else
+		get all of the node's planked neighbors that haven't been visited
+		set their parent node to the current node
+		mark the nodes as visited
+		put them into the next_queue
+	
+	if main_queue is empty
+		increment path_length by 1
+		add all of next_queue into main_queue
+		clear next_queue
+end while
+
+if found is true
+	max_path <- path_length
+	
+Create an integer, plank_level <- 0
+found <- false
+path_length <- 0
+
+Now do multiple breadth first searches, with the plank being used at a different step in each one
+for plank_level is 1 to max_path - 2
+	Set all nodes to not visited
+	Clear node's parent value
+	Add the entrance node to main_queue
+	
+	While both queues are not empty and found is false and path_length is less than max_path - 2
+		pop the first node from main_queue
+
+		if it's the node we're looking for and path_length is less than max_path
+				found <- true
+				final_node <- the found node
+				max_path <- path_length
+		else
+			if plank_level equals path_length
+				get all of the node's neighbors that haven't been visited
+			else
+				get all of the node's planked neighbors that haven't been visited
+			set their parent node to the current node
+			mark the nodes as visited
+			put them into the next_queue
+		
+		if main_queue is empty
+			increment path_length by 1
+			add all of next_queue into main_queue
+			clear next_queue
+	end while
+
+end for
+
+while final_node has a parent node
+	add final_node to the shortest_path list
+	final_node <- final_node's parent node
+	
+return the shortest_path list
+	
+	
+	
+	
+First this algorithm will run a breadth-first search to find the shortest possible path without using the extra plank. This is to give a definitive end point for the search while using the extra plank, since that is much more time complex. Then it will run as many breadth first searches as needed to see if there is a shorter path with the extra plank. To do this is runs a breadth first search, first using the plank in the first step, and then continuing as normal. If it doesn't find a solution that is shorter then it runs another breadth first search, this time using the extra plank in the second step. Suppose that the shortest path was in 8 steps, if it gets to the breadth first search using the extra plank on the 7th step then it knows that it can stop because there is no shorter path that uses the extra plank.
+
+	
+Test cases:
+Standard optimization: Will use the breadth first search to find the shortest possible path (length x) without a plank. Then will run less than x breadth first searches to find the shorter path that uses the plank.
+Impossible path - Will run in n^2 time due to the for loop not having a way to know that the path is impossible
+Only possible with a plank - First breadth first search will not find anything. max_path will remain at the initial value. Worst case complexity is n^2 if the max_path length is the correct solution, with the plank placed in that position
+Multiple solutions of same length - Breadth first search doesn't care about this, it will just return the first one that it finds
+Using plank doesn't help - The searches will only run while there is a possibility of the path being shorter, if it doesn't find that it will just use the result of the first breadth first search
+No puzzle - Doesn't run, max_path will be negative and it will just return an empty set
+Start state is goal state - It finds the solution and then doesn't run the extra plank searches because they can't possibly be shorter
+
+Worst case time complexity is (n^2)(|E| + |V|) due to the for loop that checks for options while planking

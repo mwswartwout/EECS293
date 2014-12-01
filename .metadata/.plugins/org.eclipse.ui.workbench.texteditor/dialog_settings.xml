@@ -3,35 +3,36 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
 		<item value="233" key="DIALOG_Y_ORIGIN"/>
-		<item value="1270" key="DIALOG_X_ORIGIN"/>
 		<item value="381" key="DIALOG_HEIGHT"/>
+		<item value="1288" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="HOME" key="selection"/>
+		<item value="0d" key="selection"/>
 		<list key="findhistory">
+			<item value="(double) 0"/>
+			<item value="private"/>
+			<item value="checkForNullInput"/>
 			<item value="home"/>
 			<item value="checkForValid"/>
 			<item value="status"/>
 			<item value="email"/>
 			<item value="lastName"/>
-			<item value="Middle"/>
-			<item value="middle"/>
-			<item value="iterator"/>
 		</list>
 		<list key="replacehistory">
+			<item value="0d"/>
+			<item value="public"/>
+			<item value="HelperMethods.checkForNullInput"/>
 			<item value="valid"/>
 			<item value="phoneNumber"/>
 			<item value="email"/>
 			<item value="Last"/>
 			<item value="last"/>
-			<item value="userIterator"/>
-			<item value="Validity"/>
 		</list>
 	</section>
 </section>

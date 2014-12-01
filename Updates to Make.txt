@@ -1,0 +1,3 @@
+Friends are created only when  the neighborhood methods is called
+When the search happens you run through the links and then create a friend depending on how far away it is from the root user
+So as a set you can tell that the root user is the friend with distance 0, and then see everyone else. This is why friends only have one user in their definition, because they are only created when the neighborhood method is called they are clearly associated with the user that was the input for neighborhood
